@@ -1,0 +1,5 @@
+// Generates a null handling profile for the given list of profiles. The null handling profile is a profile that contains all the null handling rules for the given profiles.
+
+{
+    
+}
