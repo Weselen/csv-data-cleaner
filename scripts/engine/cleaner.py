@@ -2,14 +2,6 @@ import pandas as pd
 
 # This module contains functions for cleaning and preprocessing data
 
-NULL_RULES = {
-      "numeric": "median",                                                                                                                                             
-      "string": "unknown",                                                                                                                                           
-      "boolean": False,                                                                                                                                                
-      "datetime": "drop",                                                                                                                                            
-      "id": "drop",                                                                                                                                                    
-  }
-
 
 # Handles cleaning of data based on the inferred schema, such as converting datatypes. 
 def clean_data(df, schema):
@@ -23,10 +15,10 @@ def clean_data(df, schema):
     return df
 
 # Handle null values by filling them with appropriate defaults based on the inferred schema
-def handle_nulls(df, schema):
+def handle_nulls(df, schema, null_rules):
     for column in df.columns:
         null_value = schema.get(column) # get the type of null value
-        rule = NULL_RULES.get(null_value)
+        rule = null_rules.get(null_value)
         if rule == "median":
             df[column] = df[column].fillna(df[column].median())
         elif rule == "unknown":

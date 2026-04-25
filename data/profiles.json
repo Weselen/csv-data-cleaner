@@ -1,5 +1,52 @@
-// Generates a null handling profile for the given list of profiles. The null handling profile is a profile that contains all the null handling rules for the given profiles.
+
 
 {
-    
+    "retail": {
+      "numeric": "median",                                                                                                                                             
+      "string": "unknown",                                                                                                                                           
+      "boolean": false,                                                                                                                                                
+      "datetime": "drop",                                                                                                                                            
+      "id": "drop" ,
+      "column_overrides": {
+          "unit_price": "drop",                                                        
+          "price": "drop"
+      }            
+    },
+    "service" : {
+        "numeric": "median",
+        "string": "drop",
+        "boolean": false,
+        "datetime": "drop",
+        "id": "drop",
+        "column_overrides": {
+            "service_fee": "drop",
+            "total_cost": "drop"
+
+        }
+    },
+    "hospitality" : {
+        "numeric": "median",
+        "string": "drop",
+        "boolean": false,
+        "datetime": "drop",
+        "id": "drop",
+        "column_overrides": {
+            "service_fee": "drop",
+            "total_cost": "drop",
+            "room_type": "unknown",
+            "review_comment": "unknown"
+
+        }
+    },
+    "nonprofit" : {
+        "numeric": "median",
+        "string": "drop",
+        "boolean": false,
+        "datetime": "drop",
+        "id": "drop",
+        "column_overrides": {
+            "donation_amount": "0",
+            "event_attendance": "fill_zero"
+        }
+    }
 }
