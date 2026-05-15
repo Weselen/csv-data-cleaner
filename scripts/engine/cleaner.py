@@ -16,9 +16,15 @@ def clean_data(df, schema):
 
 # Handle null values by filling them with appropriate defaults based on the inferred schema
 def handle_nulls(df, schema, null_rules):
-    for column in df.columns:
+    overrides = null_rules.get("column_overrides", {}) # Get any column-specific overrides for null handling
+    for column in df.columns:        
         null_value = schema.get(column) # get the type of null value
-        rule = null_rules.get(null_value)
+        # Check if there is a column-specific override for this column. If so, use that rule instead of the default for the type.
+        if column in overrides:
+            rule = overrides[column]
+        else:
+            rule = null_rules.get(null_value)
+        # Handle nulls based on the rule specified in the profile. This can be median for numeric, "Unknown" for strings, False for booleans, or drop the row if the rule is "drop".
         if rule == "median":
             df[column] = df[column].fillna(df[column].median())
         elif rule == "unknown":
@@ -27,6 +33,8 @@ def handle_nulls(df, schema, null_rules):
             df[column] = df[column].fillna(False)
         elif rule == "drop":
             df = df.dropna(subset=[column])
+        elif rule == "fill_zero" or rule == "0": 
+            df[column] = df[column].fillna(0)
 
     return df
 
